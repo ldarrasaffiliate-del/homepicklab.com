@@ -354,12 +354,25 @@ main {
   display: grid;
   gap: 18px;
   align-items: center;
+  text-align: left;
 }
 
 .hero__content {
   display: grid;
   gap: 10px;
   align-content: start;
+}
+
+.hero--media .badge {
+  margin-inline: 0;
+}
+
+.hero--media .chip-row {
+  justify-content: flex-start;
+}
+
+.hero--media .search {
+  margin-inline: 0;
 }
 
 .hero__media {
@@ -1145,7 +1158,7 @@ section.stack#faq .card.prose {
 }
 
 /* Responsive */
-@media (max-width: 520px) {
+@media (max-width: 760px) {
   .nav {
     gap: 10px;
   }
@@ -1182,6 +1195,10 @@ section.stack#faq .card.prose {
     width: 100%;
   }
 
+  .hero .chip-row .btn {
+    width: 100%;
+  }
+
   .btn {
     white-space: normal;
     text-align: center;
@@ -1211,7 +1228,7 @@ section.stack#faq .card.prose {
   }
 
   .grid--3 {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .hero {
@@ -1222,21 +1239,7 @@ section.stack#faq .card.prose {
     font-size: 2.25rem;
   }
 
-  .hero--media {
-    grid-template-columns: 1.05fr 0.95fr;
-    text-align: left;
-  }
-
-  .hero--media .badge {
-    margin-inline: 0;
-  }
-
-  .hero--media .chip-row {
-    justify-content: flex-start;
-  }
-
   .hero--media .search {
-    margin-inline: 0;
     max-width: 720px;
   }
 
@@ -1254,13 +1257,21 @@ section.stack#faq .card.prose {
   }
 }
 
-@media (min-width: 980px) {
+@media (min-width: 1100px) {
   .nav__links {
     display: flex;
   }
 
   .nav__burger {
     display: none;
+  }
+
+  .grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .hero--media {
+    grid-template-columns: 1.05fr 0.95fr;
   }
 
   .carousel__slide {
