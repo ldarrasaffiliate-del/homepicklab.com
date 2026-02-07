@@ -103,6 +103,11 @@ kbd {
 .stack {
   display: grid;
   gap: 18px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.stack > * {
+  min-width: 0;
 }
 
 .stack--tight {
