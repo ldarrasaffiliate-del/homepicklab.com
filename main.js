@@ -5,7 +5,7 @@
    - YouTube embeds are blocked unless External media consent (or session grant). */
 
 const SITE_ORIGIN = "https://homepickslab.com";
-const GA4_MEASUREMENT_ID = "G-XXXXXXXXXX";
+const GA4_MEASUREMENT_ID = "G-W6JW3C08M3";
 const CONSENT_STORAGE_KEY = "hpl_consent_v1";
 const EXTERNAL_MEDIA_SESSION_KEY = "hpl_external_media_session";
 
@@ -393,11 +393,13 @@ function loadGA4() {
   document.head.appendChild(s);
 
   window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    window.dataLayer.push(arguments);
-  }
-  gtag("js", new Date());
-  gtag("config", GA4_MEASUREMENT_ID, { anonymize_ip: true });
+  window.gtag =
+    window.gtag ||
+    function gtag() {
+      window.dataLayer.push(arguments);
+    };
+  window.gtag("js", new Date());
+  window.gtag("config", GA4_MEASUREMENT_ID, { anonymize_ip: true });
 }
 
 function renderYouTubeEmbeds() {
