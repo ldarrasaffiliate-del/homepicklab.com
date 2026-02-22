@@ -111,29 +111,26 @@ const ROUTE_MAP = {
   },
 };
 
-// Amazon Associates affiliate tags (placeholders to replace in production).
-const AFFILIATE_TAGS = {
-  en: "YOURTAGUS-20",
-  fr: "YOURTAGFR-21",
-  es: "YOURTAGES-21",
-  de: "YOURTAGDE-21",
-};
-
-const PRODUCTS = {
-  P1: {
-    asin: "B0FNSCXX51",
-    query: "Roomba Plus 405 Combo robot AutoWash dock G185020",
-    display: "iRobot Roomba Plus 405 Combo robot + AutoWash dock (G185020)",
+const AFFILIATE_LINKS = {
+  en: {
+    P1: "https://amzn.to/4tQ8XxW",
+    P2: "https://amzn.to/4b4EoNC",
+    P3: "https://amzn.to/4qWlNIp",
   },
-  P2: {
-    asin: "B0FLDWJK7S",
-    query: "Shark PowerDetect 2-in-1 Robot Vacuum and Mop NeverTouch Pro Base",
-    display: "Shark PowerDetect 2-in-1 Robot Vacuum and Mop with NeverTouch Pro Base",
+  fr: {
+    P1: "https://amzn.to/3Os8i5L",
+    P2: "https://amzn.to/4s8uznN",
+    P3: "https://amzn.to/4qRdRbl",
   },
-  P3: {
-    asin: "B0F6N1JGGW",
-    query: "Roborock QV 35A Robot Vacuum All-in-One Multifunctional Dock",
-    display: "Roborock QV 35A Robot Vacuum + All-in-One Multifunctional Dock",
+  es: {
+    P1: "https://amzn.to/3ZQ9rXe",
+    P2: "https://amzn.to/4kP1Ph6",
+    P3: "https://amzn.to/4kPWeHC",
+  },
+  de: {
+    P1: "https://amzn.to/3OX3jdi",
+    P2: "https://amzn.to/3Ot8eTf",
+    P3: "https://amzn.to/3OV4bza",
   },
 };
 
@@ -301,36 +298,6 @@ function initScrollProgress() {
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll, { passive: true });
 }
-
-function buildAffiliateLinks() {
-  const tags = AFFILIATE_TAGS;
-  const byLang = {
-    en: {},
-    fr: {},
-    es: {},
-    de: {},
-  };
-
-  for (const [productId, p] of Object.entries(PRODUCTS)) {
-    byLang.en[productId] = `https://www.amazon.com/dp/${p.asin}/?tag=${encodeURIComponent(
-      tags.en,
-    )}`;
-    // If ASIN isn't known on local marketplaces, use a localized search link.
-    byLang.fr[productId] = `https://www.amazon.fr/s?k=${encodeURIComponent(
-      p.query,
-    )}&tag=${encodeURIComponent(tags.fr)}`;
-    byLang.es[productId] = `https://www.amazon.es/s?k=${encodeURIComponent(
-      p.query,
-    )}&tag=${encodeURIComponent(tags.es)}`;
-    byLang.de[productId] = `https://www.amazon.de/s?k=${encodeURIComponent(
-      p.query,
-    )}&tag=${encodeURIComponent(tags.de)}`;
-  }
-
-  return byLang;
-}
-
-const AFFILIATE_LINKS = buildAffiliateLinks();
 
 function wireAffiliateLinks() {
   const lang = getLangFromPath(location.pathname);

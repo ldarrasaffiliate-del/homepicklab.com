@@ -4,27 +4,25 @@
 
 liens affiliation iRobot Roomba Plus 405 Combo Robot :
 
-Amazon.com : https://amzn.to/4qLSUiR
+Amazon.com : https://amzn.to/4tQ8XxW
 
-Amazon.fr :https://amzn.to/4a5CYkb
+Amazon.fr :https://amzn.to/3Os8i5L
 
-Amazon.de :https://amzn.to/3LI7s3W
+Amazon.de :https://amzn.to/3OX3jdi
 
-Amazon.es :https://amzn.to/4q6JjCd
-
-
+Amazon.es :https://amzn.to/3ZQ9rXe
 
 
 
 liens affilliation Shark PowerDetect 2-in-1 + NeverTouch Pro Base :
 
-Amazon.com :https://amzn.to/3LI7Cby
+Amazon.com :https://amzn.to/4b4EoNC
 
-Amazon.fr :https://amzn.to/49PLaGC
+Amazon.fr :https://amzn.to/4s8uznN
 
-Amazon.de :https://amzn.to/4an5Cia
+Amazon.de :https://amzn.to/3Ot8eTf
 
-Amazon.es :https://amzn.to/4a2gaSw
+Amazon.es :https://amzn.to/4kP1Ph6
 
 
 
@@ -34,13 +32,13 @@ liens affiliation Roborock QV 35A + All-in-One Multifunctional Dock :
 
 
 
-Amazon.com :https://amzn.to/3Or0yAV
+Amazon.com :https://amzn.to/4qWlNIp
 
-Amazon.fr :https://amzn.to/4kR0RRJ
+Amazon.fr :https://amzn.to/4qRdRbl
 
-Amazon.de :https://amzn.to/4rtlJkm
+Amazon.de :https://amzn.to/3OV4bza
 
-Amazon.es :https://amzn.to/40s7bpb
+Amazon.es :https://amzn.to/4kPWeHC
 
 
 
@@ -56,36 +54,34 @@ liens affiliation Ninja Luxe Pro :
 
 
 
-Amazon.com : https://amzn.to/4btKxDL
+Amazon.com : https://amzn.to/4rZqfXK
 
-Amazon.fr : https://amzn.to/45CKkdN
+Amazon.fr : https://amzn.to/3ZSs9gV
 
-Amazon.de : https://amzn.to/3ZH788D
+Amazon.de : https://amzn.to/4ayDGbu
 
-Amazon.es : https://amzn.to/4t9nN2l
+Amazon.es : https://amzn.to/4ruhC7A
 
 
 
 liens d'affiliation De'Longhi Magnifica Evo :
 
-Amazon.com :https://amzn.to/4c7EqFx
-Amazon.fr : https://amzn.to/4kQCNOS
-Amazon.de :https://amzn.to/4b2AmW0
+Amazon.com :https://amzn.to/4qLXGvR
+Amazon.fr : https://amzn.to/3OUz7Q2
+Amazon.de :https://amzn.to/4atcoTK
 
-Amazon.es : https://amzn.to/3OsCnlJ
+Amazon.es : https://amzn.to/4aQqlKx
 
 
 
 liens d'affiliation PHILIPS 3200 Series Fully Automatic Espresso :
 
-Amazon.com :https://amzn.to/4s2HTKg
+Amazon.com :https://amzn.to/4tR5aAr
 
-Amazon.fr :https://amzn.to/46lZp3H
+Amazon.fr :https://amzn.to/4c2Y2uu
 
-Amazon.de :https://amzn.to/4tTcpbo
-Amazon.es :https://amzn.to/4kP4bge
-
-
+Amazon.de :https://amzn.to/3MV3i9i
+Amazon.es :https://amzn.to/4qT418Z
 
 
 
@@ -109,13 +105,13 @@ https://www.amazon.fr/NINJA-Friteuse-verticale-fonctions-SL400EU/dp/B0CZPJ1HFP/r
 liens d'affiliation Ninja DoubleStack XL Smart 2 
 
 
-Amazon.com :https://amzn.to/4tPnw4Q
+Amazon.com :https://amzn.to/3MIIIJ2
 
-Amazon.fr :https://amzn.to/4aLYafK
+Amazon.fr :https://amzn.to/4kV7i6s
 
-Amazon.de :https://amzn.to/4avcb2r
+Amazon.de :https://amzn.to/3ZLMNzj
 
-Amazon.es : https://amzn.to/4c8kFO5
+Amazon.es : https://amzn.to/3OwjFcO
 
 
 
@@ -135,13 +131,13 @@ liens d'affiliation Ninja Foodi MAX
 
 
 
-Amazon.com : https://amzn.to/46FTVkH
+Amazon.com : https://amzn.to/4u7LQzl
 
-Amazon.fr :https://amzn.to/4aPIVlV
+Amazon.fr :https://amzn.to/474LxuV
 
-Amazon.de : https://amzn.to/3MlkfcU
+Amazon.de : https://amzn.to/3MpgROd
 
-Amazon.es :https://amzn.to/4kPa6ld
+Amazon.es :https://amzn.to/3MZ8d9b
 
 
 
