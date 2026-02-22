@@ -433,38 +433,59 @@ function getThemeIcon(mode) {
 function initThemeToggle() {
   applyThemeMode(getStoredThemeMode());
 
-  const right = document.querySelector(".nav__right");
-  if (!right) return;
-
-  const btn = document.createElement("button");
-  btn.type = "button";
-  btn.className = "icon-btn theme-toggle";
-  btn.id = "themeBtn";
-
-  const burger = document.getElementById("menuBtn");
-  if (burger && burger.parentElement === right) right.insertBefore(btn, burger);
-  else right.appendChild(btn);
-
   const labelFor = (mode) => {
     if (mode === "dark") return `${t("themeLabel")}: ${t("themeModeDark")}`;
     if (mode === "light") return `${t("themeLabel")}: ${t("themeModeLight")}`;
     return `${t("themeLabel")}: ${t("themeModeAuto")}`;
   };
 
+  const controls = [];
+
+  const right = document.querySelector(".nav__right");
+  if (right) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "icon-btn theme-toggle";
+    btn.id = "themeBtn";
+
+    const burger = document.getElementById("menuBtn");
+    if (burger && burger.parentElement === right) right.insertBefore(btn, burger);
+    else right.appendChild(btn);
+
+    controls.push({ el: btn, kind: "icon" });
+  }
+
+  const drawerNav = document.querySelector(".drawer__nav");
+  if (drawerNav) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "drawer__action";
+    btn.id = "themeBtnDrawer";
+    drawerNav.appendChild(btn);
+    controls.push({ el: btn, kind: "text" });
+  }
+
+  if (!controls.length) return;
+
   const render = () => {
     const mode = getStoredThemeMode();
     const label = labelFor(mode);
-    btn.setAttribute("aria-label", label);
-    btn.setAttribute("title", label);
-    btn.innerHTML = getThemeIcon(mode);
+    controls.forEach(({ el, kind }) => {
+      el.setAttribute("aria-label", label);
+      el.setAttribute("title", label);
+      if (kind === "icon") el.innerHTML = getThemeIcon(mode);
+      else el.textContent = label;
+    });
   };
 
-  btn.addEventListener("click", () => {
+  const onClick = () => {
     const current = getStoredThemeMode();
     const next = current === "auto" ? "dark" : current === "dark" ? "light" : "auto";
     setThemeMode(next);
     render();
-  });
+  };
+
+  controls.forEach(({ el }) => el.addEventListener("click", onClick));
 
   render();
 

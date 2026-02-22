@@ -363,9 +363,16 @@ kbd {
 }
 
 .nav__links {
-  display: none;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
   gap: 10px;
+}
+
+.nav__links > a {
+  display: none;
 }
 
 .nav__links a {
@@ -452,6 +459,18 @@ kbd {
   gap: 4px;
 }
 
+.nav__links .nav__dropdown-menu {
+  transform: none;
+}
+
+@media (max-width: 1099px) {
+  .nav__links .nav__dropdown-menu {
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: min(260px, 86vw);
+  }
+}
+
 .nav__links .nav__dropdown-menu a {
   display: block;
   padding: 10px 12px;
@@ -469,6 +488,10 @@ kbd {
   background: var(--active-bg);
   box-shadow: inset 0 0 0 1px var(--active-border);
   font-weight: 700;
+}
+
+.site-header .theme-toggle {
+  display: none;
 }
 
 .drawer__nav .nav__dropdown > summary {
@@ -660,6 +683,26 @@ select {
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+.drawer__nav .drawer__action {
+  font: inherit;
+  padding: 10px 2px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+}
+
+.drawer__nav .drawer__action:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.drawer__nav .drawer__action[aria-current="true"] {
+  color: var(--link);
+  font-weight: 700;
 }
 
 .badge {
@@ -2002,8 +2045,16 @@ section.stack#faq .card.prose {
     display: flex;
   }
 
+  .nav__links > a {
+    display: inline-block;
+  }
+
   .nav__burger {
     display: none;
+  }
+
+  .site-header .theme-toggle {
+    display: inline-flex;
   }
 
   .grid--3 {
