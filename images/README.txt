@@ -1,6 +1,6 @@
 HomePicksLab favicon pack
 
-Put these files at the root of your website (e.g. https://homepickslab.com/favicon.ico).
+Put these files at the root of your website (e.g. https://homepicklab.com/favicon.ico).
 
 Add this to <head>:
 

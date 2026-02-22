@@ -1867,6 +1867,90 @@ section.stack#faq .card.prose {
     aspect-ratio: 16 / 9;
   }
 
+  /* Mobile-friendly tables: turn .table-scroll into stacked cards (JS enables via data attribute). */
+  .table-scroll[data-table-mobile="cards"] {
+    border: 0;
+    background: transparent;
+    overflow-x: visible;
+    border-radius: 0;
+  }
+
+  .table-scroll[data-table-mobile="cards"] > table {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .table-scroll[data-table-mobile="cards"] th,
+  .table-scroll[data-table-mobile="cards"] td {
+    min-width: 0;
+  }
+
+  .table-scroll[data-table-mobile="cards"] thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .table-scroll[data-table-mobile="cards"] tbody,
+  .table-scroll[data-table-mobile="cards"] tr {
+    display: block;
+    width: 100%;
+  }
+
+  .table-scroll[data-table-mobile="cards"] tr {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+    padding: 10px 12px;
+    margin: 0 0 12px;
+  }
+
+  .table-scroll[data-table-mobile="cards"] tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .table-scroll[data-table-mobile="cards"] th,
+  .table-scroll[data-table-mobile="cards"] td {
+    display: block;
+    border: 0;
+    padding: 0;
+  }
+
+  .table-scroll[data-table-mobile="cards"] th[scope="row"],
+  .table-scroll[data-table-mobile="cards"] tr > :first-child {
+    font-weight: 800;
+    color: var(--text);
+    margin: 0 0 8px;
+  }
+
+  .table-scroll[data-table-mobile="cards"] td {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  .table-scroll[data-table-mobile="cards"] td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .table-scroll[data-table-mobile="cards"] tr > td:first-child::before,
+  .table-scroll[data-table-mobile="cards"] td:not([data-label])::before,
+  .table-scroll[data-table-mobile="cards"] td[data-label=""]::before {
+    display: none;
+  }
+
   .prose th,
   .prose td {
     padding: 8px;

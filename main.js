@@ -4,7 +4,7 @@
    - GA4 loads only after Analytics consent.
    - YouTube embeds are blocked unless External media consent (or session grant). */
 
-const SITE_ORIGIN = "https://homepickslab.com";
+const SITE_ORIGIN = "https://homepicklab.com";
 const GA4_MEASUREMENT_ID = "G-W6JW3C08M3";
 const CONSENT_STORAGE_KEY = "hpl_consent_v1";
 const EXTERNAL_MEDIA_SESSION_KEY = "hpl_external_media_session";
@@ -15,6 +15,7 @@ const I18N = {
     videoPlaceholderTitle: "Click to load video",
     videoPlaceholderBody: "External media (YouTube) is blocked until you allow it.",
     videoPlaceholderCta: "Load video",
+    bothLabel: "Both models",
     themeLabel: "Theme",
     themeModeAuto: "Auto",
     themeModeLight: "Light",
@@ -28,6 +29,7 @@ const I18N = {
     videoPlaceholderTitle: "Cliquer pour charger la vidéo",
     videoPlaceholderBody: "Les médias externes (YouTube) sont bloqués tant que vous ne les autorisez pas.",
     videoPlaceholderCta: "Charger la vidéo",
+    bothLabel: "Les deux modèles",
     themeLabel: "Thème",
     themeModeAuto: "Auto",
     themeModeLight: "Clair",
@@ -41,6 +43,7 @@ const I18N = {
     videoPlaceholderTitle: "Haz clic para cargar el vídeo",
     videoPlaceholderBody: "Los medios externos (YouTube) están bloqueados hasta que los permitas.",
     videoPlaceholderCta: "Cargar vídeo",
+    bothLabel: "Ambos modelos",
     themeLabel: "Tema",
     themeModeAuto: "Auto",
     themeModeLight: "Claro",
@@ -54,6 +57,7 @@ const I18N = {
     videoPlaceholderTitle: "Klicken, um das Video zu laden",
     videoPlaceholderBody: "Externe Medien (YouTube) sind blockiert, bis du sie erlaubst.",
     videoPlaceholderCta: "Video laden",
+    bothLabel: "Beide Modelle",
     themeLabel: "Design",
     themeModeAuto: "Auto",
     themeModeLight: "Hell",
@@ -1459,6 +1463,47 @@ function initHomeFilters() {
   apply();
 }
 
+function initResponsiveTables() {
+  const wrappers = Array.from(document.querySelectorAll(".table-scroll"));
+  if (!wrappers.length) return;
+
+  wrappers.forEach((wrapper) => {
+    const table = wrapper.querySelector("table");
+    if (!table) return;
+
+    const headerRow = table.querySelector("thead tr");
+    if (!headerRow) return;
+
+    const headers = Array.from(headerRow.querySelectorAll("th, td"))
+      .map((h) => (h.textContent || "").trim().replace(/\s+/g, " "))
+      .filter(Boolean);
+    if (!headers.length) return;
+
+    // Enable the mobile “cards” layout only when JS is available (and only for tables with <thead>).
+    wrapper.setAttribute("data-table-mobile", "cards");
+
+    const bothLabel = t("bothLabel") || "Both";
+
+    table.querySelectorAll("tbody tr").forEach((tr) => {
+      let colIndex = 0;
+      const cells = Array.from(tr.querySelectorAll(":scope > th, :scope > td"));
+      cells.forEach((cell) => {
+        const spanRaw = cell.getAttribute("colspan");
+        const span = spanRaw ? Number.parseInt(spanRaw, 10) : 1;
+        const safeSpan = Number.isFinite(span) && span > 0 ? span : 1;
+
+        if (cell instanceof HTMLTableCellElement && cell.tagName === "TD") {
+          const label =
+            safeSpan > 1 ? bothLabel : headers[colIndex] || "";
+          cell.setAttribute("data-label", label);
+        }
+
+        colIndex += safeSpan;
+      });
+    });
+  });
+}
+
 function initCollapsibles() {
   const detailsEls = Array.from(document.querySelectorAll('details[data-collapsible="preface"]'));
   if (!detailsEls.length) return;
@@ -1518,6 +1563,7 @@ initBackToTop();
 initPrintSupport();
 initBlogSearch();
 initHomeFilters();
+initResponsiveTables();
 initCollapsibles();
 initTocCollapsibles();
 initPageLayouts();
