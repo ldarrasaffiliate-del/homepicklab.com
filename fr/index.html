@@ -114,8 +114,6 @@
           <a href="/fr/">Accueil</a>
           <a href="/fr/comparatif-aspirateurs-robots/">Aspirateurs robots &amp; lavage</a>
           <a href="/fr/blog/">Blog</a>
-          <a href="/fr/mentions-legales/">Mentions légales</a>
-          <a href="/fr/politique-de-confidentialite/">Confidentialité</a>
         </nav>
 
         <div class="nav__right">
@@ -171,8 +169,6 @@
           <a href="/fr/">Accueil</a>
           <a href="/fr/comparatif-aspirateurs-robots/">Aspirateurs robots &amp; lavage</a>
           <a href="/fr/blog/">Blog</a>
-          <a href="/fr/mentions-legales/">Mentions légales</a>
-          <a href="/fr/politique-de-confidentialite/">Confidentialité</a>
         </nav>
         <div class="tiny muted">
           As an Amazon Associate, HomePicksLab.com earns from qualifying purchases.
@@ -238,60 +234,63 @@
         </section>
 
         <section class="stack" aria-labelledby="popular-categories">
-          <h2 id="popular-categories">Catégories populaires</h2>
+          <h2 id="popular-categories">Catégories</h2>
           <div class="grid grid--3">
             <article class="card">
-              <div class="card__top">
-                <h3>Ménage</h3>
-                <span class="pill">Guides</span>
+              <div class="card__media card__media--wide" aria-hidden="true">
+                <img
+                  src="/images/roborock-qv-35a-6.jpg"
+                  width="1500"
+                  height="1500"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
-              <p class="muted">Routines utiles, outils simples, et points à vérifier avant achat.</p>
-              <a class="btn btn--small" href="/fr/blog/">Explorer</a>
-            </article>
-
-            <article class="card">
-              <div class="card__top">
-                <h3>Cuisine</h3>
-                <span class="pill">Sélections</span>
-              </div>
-              <p class="muted">Essentiels du quotidien pour gagner en place et en fluidité.</p>
-              <a class="btn btn--small" href="/fr/blog/">Voir les conseils</a>
-            </article>
-
-            <article class="card">
-              <div class="card__top">
-                <h3>Rangement</h3>
-                <span class="pill">Organisation</span>
-              </div>
-              <p class="muted">Systèmes simples pour placards, cellier, garage et petits espaces.</p>
-              <a class="btn btn--small" href="/fr/blog/">Trouver des idées</a>
-            </article>
-
-            <article class="card">
-              <div class="card__top">
-                <h3>Entretien du linge</h3>
-                <span class="pill">Care</span>
-              </div>
-              <p class="muted">Bonnes pratiques et checklists d’entretien pour durer plus longtemps.</p>
-              <a class="btn btn--small" href="/fr/blog/">Lire</a>
-            </article>
-
-            <article class="card">
-              <div class="card__top">
-                <h3>Essentiels jardin</h3>
-                <span class="pill">Saisonnier</span>
-              </div>
-              <p class="muted">Petites améliorations pour rendre les tâches extérieures plus rapides.</p>
-              <a class="btn btn--small" href="/fr/blog/">Voir les guides</a>
-            </article>
-
-            <article class="card">
               <div class="card__top">
                 <h3>Aspirateurs robots &amp; lavage</h3>
                 <span class="pill pill--gold">MAJ janv. 2026</span>
               </div>
-              <p class="muted">Comparatif utile 2026 avec vidéos et carrousels photos.</p>
+              <p class="muted">Comparatif pratique + routines d’entretien pour shortlist sans prise de tête.</p>
               <a class="btn btn--small" href="/fr/comparatif-aspirateurs-robots/">Ouvrir le comparatif</a>
+            </article>
+
+            <article class="card">
+              <div class="card__media card__media--wide" aria-hidden="true">
+                <img
+                  src="/images/machines-cafe-auto/delonghi-1.jpg"
+                  width="1500"
+                  height="1500"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="card__top">
+                <h3>Machines à café automatiques</h3>
+                <span class="pill">Guide</span>
+              </div>
+              <p class="muted">Systèmes lait, nettoyage, eau/entartage—et picks pratiques.</p>
+              <a class="btn btn--small" href="/fr/machines-a-cafe-automatiques/">Ouvrir le guide</a>
+            </article>
+
+            <article class="card">
+              <div class="card__media card__media--wide" aria-hidden="true">
+                <img
+                  src="/images/airfryers/ninjafoodi-2.jpg"
+                  width="1500"
+                  height="1500"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="card__top">
+                <h3>Airfryers</h3>
+                <span class="pill">Comparatifs</span>
+              </div>
+              <p class="muted">Capacité, format des tiroirs, fonctions—Ninja Foodi MAX vs DoubleStack XL.</p>
+              <a class="btn btn--small" href="/fr/airfryers/">Voir les comparatifs</a>
             </article>
           </div>
         </section>
@@ -385,51 +384,109 @@
         <section class="stack" aria-labelledby="featured-filter">
           <h2 id="featured-filter">Filtre rapide : modèles aspirateur robot + lavage</h2>
 
-          <div class="filters" aria-label="Filtrer la grille">
-            <fieldset class="filters__row">
-              <legend>Usage</legend>
-              <div class="chip-row">
-                <label class="chip"
-                  ><input type="checkbox" data-filter-group="usage" data-filter="pets" /> Animaux</label
-                >
-                <label class="chip"
-                  ><input type="checkbox" data-filter-group="usage" data-filter="carpets" /> Tapis</label
-                >
-                <label class="chip"
-                  ><input type="checkbox" data-filter-group="usage" data-filter="mop" /> Lavage</label
-                >
-              </div>
-            </fieldset>
+          <div class="filters-shell">
+            <div class="filters-shell__head">
+              <span class="tiny muted">Optionnel : utilisez les filtres pour affiner les modèles mis en avant.</span>
+              <button class="btn btn--ghost btn--small" type="button" data-filter-reset>Réinitialiser</button>
+            </div>
 
-            <fieldset class="filters__row">
-              <legend>Marque</legend>
-              <div class="chip-row">
-                <label class="chip"
-                  ><input type="checkbox" data-filter-group="brand" data-filter="irobot" /> iRobot</label
-                >
-                <label class="chip"
-                  ><input type="checkbox" data-filter-group="brand" data-filter="shark" /> Shark</label
-                >
-                <label class="chip"
-                  ><input type="checkbox" data-filter-group="brand" data-filter="roborock" /> Roborock</label
-                >
-              </div>
-            </fieldset>
+            <div class="filters" aria-label="Filtrer la grille">
+              <fieldset class="filters__row">
+                <legend>Usage</legend>
+                <div class="chip-row">
+                  <input
+                    class="chip__input"
+                    id="filter-usage-pets"
+                    type="checkbox"
+                    data-filter-group="usage"
+                    data-filter="pets"
+                  />
+                  <label class="chip" for="filter-usage-pets">Animaux</label>
 
-            <fieldset class="filters__row">
-              <legend>Gamme de budget (sans prix)</legend>
-              <div class="chip-row">
-                <label class="chip"
-                  ><input type="checkbox" data-filter-group="budget" data-filter="value" /> Économique</label
-                >
-                <label class="chip"
-                  ><input type="checkbox" data-filter-group="budget" data-filter="mid" /> Intermédiaire</label
-                >
-                <label class="chip"
-                  ><input type="checkbox" data-filter-group="budget" data-filter="premium" /> Premium</label
-                >
-              </div>
-            </fieldset>
+                  <input
+                    class="chip__input"
+                    id="filter-usage-carpets"
+                    type="checkbox"
+                    data-filter-group="usage"
+                    data-filter="carpets"
+                  />
+                  <label class="chip" for="filter-usage-carpets">Tapis</label>
+
+                  <input
+                    class="chip__input"
+                    id="filter-usage-mop"
+                    type="checkbox"
+                    data-filter-group="usage"
+                    data-filter="mop"
+                  />
+                  <label class="chip" for="filter-usage-mop">Lavage</label>
+                </div>
+              </fieldset>
+
+              <fieldset class="filters__row">
+                <legend>Marque</legend>
+                <div class="chip-row">
+                  <input
+                    class="chip__input"
+                    id="filter-brand-irobot"
+                    type="checkbox"
+                    data-filter-group="brand"
+                    data-filter="irobot"
+                  />
+                  <label class="chip" for="filter-brand-irobot">iRobot</label>
+
+                  <input
+                    class="chip__input"
+                    id="filter-brand-shark"
+                    type="checkbox"
+                    data-filter-group="brand"
+                    data-filter="shark"
+                  />
+                  <label class="chip" for="filter-brand-shark">Shark</label>
+
+                  <input
+                    class="chip__input"
+                    id="filter-brand-roborock"
+                    type="checkbox"
+                    data-filter-group="brand"
+                    data-filter="roborock"
+                  />
+                  <label class="chip" for="filter-brand-roborock">Roborock</label>
+                </div>
+              </fieldset>
+
+              <fieldset class="filters__row">
+                <legend>Gamme de budget (sans prix)</legend>
+                <div class="chip-row">
+                  <input
+                    class="chip__input"
+                    id="filter-budget-value"
+                    type="checkbox"
+                    data-filter-group="budget"
+                    data-filter="value"
+                  />
+                  <label class="chip" for="filter-budget-value">Économique</label>
+
+                  <input
+                    class="chip__input"
+                    id="filter-budget-mid"
+                    type="checkbox"
+                    data-filter-group="budget"
+                    data-filter="mid"
+                  />
+                  <label class="chip" for="filter-budget-mid">Intermédiaire</label>
+
+                  <input
+                    class="chip__input"
+                    id="filter-budget-premium"
+                    type="checkbox"
+                    data-filter-group="budget"
+                    data-filter="premium"
+                  />
+                  <label class="chip" for="filter-budget-premium">Premium</label>
+                </div>
+              </fieldset>
+            </div>
           </div>
 
           <div class="grid grid--3" data-filter-grid>
