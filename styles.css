@@ -478,13 +478,12 @@ kbd {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 12px 12px;
-  border-radius: var(--radius-sm);
-  text-decoration: none;
+  padding: 10px 2px;
+  border-radius: 0;
   color: var(--text);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  transition: background 160ms ease, border-color 160ms ease;
+  border: 0;
+  background: transparent;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
 }
 
 .drawer__nav .nav__dropdown > summary::-webkit-details-marker {
@@ -492,14 +491,15 @@ kbd {
 }
 
 .drawer__nav .nav__dropdown > summary:hover {
-  background: var(--active-bg);
-  border-color: var(--active-border);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .drawer__nav .nav__dropdown[data-nav-active="true"] > summary {
-  background: var(--brand-soft);
-  border-color: var(--active-border);
+  color: var(--link);
   font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .drawer__nav .nav__dropdown > summary::after {
@@ -517,10 +517,12 @@ kbd {
 }
 
 .drawer__nav .nav__dropdown-menu {
-  margin-top: 6px;
-  display: grid;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
   gap: 6px;
-  padding-left: 10px;
+  padding-left: 12px;
+  border-left: 1px solid var(--border);
 }
 
 .lang-select {
@@ -632,29 +634,32 @@ select {
 }
 
 .drawer__nav {
-  display: grid;
-  gap: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .drawer__nav a {
   display: block;
-  padding: 12px 12px;
-  border-radius: var(--radius-sm);
+  padding: 10px 2px;
+  border-radius: 0;
   text-decoration: none;
   color: var(--text);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  transition: background 160ms ease, border-color 160ms ease;
+  border: 0;
+  background: transparent;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
 }
 
 .drawer__nav a:hover {
-  background: var(--active-bg);
-  border-color: var(--active-border);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .drawer__nav a[aria-current="page"] {
-  background: var(--brand-soft);
-  border-color: var(--active-border);
+  color: var(--link);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .badge {
