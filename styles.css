@@ -1482,6 +1482,27 @@ section.stack#faq .card.prose {
   max-width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+
+.table-scroll > table {
+  width: max-content;
+  min-width: 100%;
+}
+
+.table-scroll th,
+.table-scroll td {
+  min-width: 160px;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: manual;
+}
+
+.table-scroll th:first-child,
+.table-scroll td:first-child {
+  min-width: 220px;
 }
 
 .prose th,
