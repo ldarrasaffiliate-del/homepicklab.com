@@ -1,11 +1,8 @@
 import type { Metadata, Viewport } from 'next';
-import '../styles.css';
+import './globals.css';
 import { SITE } from '@/lib/site';
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
-import { CookieBanner } from '@/components/CookieBanner';
-import { LangHtmlUpdater } from '@/components/LangHtmlUpdater';
-import { FaqEnhancer } from '@/components/FaqEnhancer';
 
 export const viewport: Viewport = {
   themeColor: '#ffffff',
@@ -50,14 +47,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body>
-        <LangHtmlUpdater />
-        <FaqEnhancer />
         <SiteHeader />
-        <main id="main">{children}</main>
+        <main className="container">{children}</main>
         <SiteFooter />
-        <CookieBanner />
       </body>
     </html>
   );

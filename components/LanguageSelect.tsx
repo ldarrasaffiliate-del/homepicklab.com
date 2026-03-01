@@ -25,9 +25,17 @@ export function LanguageSelect() {
   }
 
   return (
-    <div className="lang-select">
-      <label htmlFor={selectId}>{t.language}</label>
-      <select id={selectId} name="lang" onChange={(e) => onChange(e.target.value as Lang)} value={lang}>
+    <div className="lang-select-container">
+      <label className="sr-only" htmlFor={selectId}>
+        {t.language}
+      </label>
+      <select
+        className="lang-select"
+        id={selectId}
+        name="lang"
+        onChange={(e) => onChange(e.target.value as Lang)}
+        value={lang}
+      >
         {SITE.supportedLangs.map((l) => (
           <option key={l} value={l}>
             {l.toUpperCase()}
@@ -37,4 +45,3 @@ export function LanguageSelect() {
     </div>
   );
 }
-

@@ -1,37 +1,22 @@
 # homepicklab.com
 
-Static site (HTML/CSS/vanilla JS).
+Next.js + MDX content site (static export).
 
-## Local preview
-
-This site uses root-absolute paths like `/styles.css`, so you need a local HTTP server (opening `index.html` via `file://` won’t load assets correctly).
-
-From the repo folder:
-
-### Windows (Git Bash / PowerShell)
-
-If you need to `cd` first, paths differ by shell:
-
-- Git Bash: `cd "/c/Path/To/homepicklab.com"`
-- WSL: `cd "/mnt/c/Path/To/homepicklab.com"`
-- PowerShell: `cd "C:\Path\To\homepicklab.com"`
+## Install
 
 ```bash
-py -m http.server 8000
+npm i
+npm run dev
 ```
 
-### macOS / Linux
+## Build (static export)
 
 ```bash
-python3 -m http.server 8000
+npm run build
 ```
 
-Then open `http://127.0.0.1:8000/`.
+Deploy the `out/` folder (Netlify `publish` directory).
 
-### Alternatives (if you don’t have Python)
+## Content
 
-```bash
-npx --yes http-server -p 8000 .
-# or
-php -S 127.0.0.1:8000 -t .
-```
+Content lives in `content/` (MDX).
