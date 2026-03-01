@@ -38,3 +38,48 @@ a:hover{text-decoration:underline}
 
 /* Minimal safety: prevent images from overflowing on mobile */
 img{max-width:100%;height:auto}
+
+/* Layout polish (keep starter-first, only readability/spacing tweaks) */
+[aria-label="Breadcrumbs"]{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:14px}
+[aria-label="Breadcrumbs"] a{color:var(--muted)}
+[aria-label="Breadcrumbs"] li{display:inline-flex;align-items:center}
+
+.hero{display:grid;gap:16px}
+@media(min-width:900px){.hero{grid-template-columns:2fr 1fr;align-items:start}}
+.hero [aria-hidden="true"]{display:grid;gap:12px}
+.hero [aria-hidden="true"]>div{display:grid;gap:12px}
+.hero [aria-hidden="true"]>div>div{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+.hero img{display:block;border-radius:14px;border:1px solid var(--border)}
+
+.card>*+*{margin-top:12px}
+.card img{display:block;border-radius:12px;border:1px solid var(--border)}
+.card a+a{margin-left:12px}
+
+@media(min-width:700px){
+  article.card>[aria-hidden="true"]{float:left;width:220px;margin:0 16px 0 0}
+  article.card::after{content:"";display:block;clear:both}
+}
+
+form[role="search"]{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+form[role="search"] input[type="search"]{flex:1;min-width:220px}
+input,select,button,textarea{font:inherit}
+input[type="search"],input[type="text"],input[type="email"],select,textarea{border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:#fff;color:var(--fg)}
+button{border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:var(--link);color:var(--fg);font-weight:700;cursor:pointer}
+button:hover{filter:brightness(0.96)}
+button:disabled{opacity:.6;cursor:not-allowed}
+
+details{border:1px solid var(--border);border-radius:12px;padding:10px 12px;background:#fff}
+details+details{margin-top:10px}
+summary{cursor:pointer;font-weight:700}
+details[open]>summary{margin-bottom:10px}
+
+[role="region"]{max-width:100%;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid var(--border);padding:8px;vertical-align:top;text-align:left}
+thead th{background:#fff}
+
+fieldset{border:1px solid var(--border);border-radius:12px;padding:12px;margin:0}
+legend{padding:0 6px;color:var(--muted);font-size:14px}
+fieldset>div{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+input[type="checkbox"]{margin:0 6px 0 0}
+label{margin:0 14px 0 0}
