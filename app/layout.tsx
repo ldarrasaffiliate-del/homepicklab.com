@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
 import './globals.css';
 import { SITE } from '@/lib/site';
 import { SiteFooter } from '@/components/SiteFooter';
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         <main className="container">{children}</main>
         <SiteFooter />
+        <Script src="/site.js" strategy="afterInteractive" />
       </body>
     </html>
   );
