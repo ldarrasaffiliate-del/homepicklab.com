@@ -1,7 +1,7 @@
 'use client';
 
-import { useId } from 'react';
 import { usePathname } from 'next/navigation';
+import { useId } from 'react';
 import type { Lang } from '@/lib/site';
 import { getLangFromPathname, localizedUrl, SITE, UI_TRANSLATIONS } from '@/lib/site';
 
@@ -25,23 +25,18 @@ export function LanguageSelect() {
   }
 
   return (
-    <div className="lang-select-container">
-      <label className="sr-only" htmlFor={selectId}>
-        {t.language}
-      </label>
-      <select
-        className="lang-select"
-        id={selectId}
-        name="lang"
-        onChange={(e) => onChange(e.target.value as Lang)}
-        value={lang}
-      >
-        {SITE.supportedLangs.map((l) => (
-          <option key={l} value={l}>
-            {l.toUpperCase()}
-          </option>
-        ))}
-      </select>
-    </div>
+    <select
+      aria-label={t.language}
+      id={selectId}
+      name="lang"
+      onChange={(e) => onChange(e.target.value as Lang)}
+      value={lang}
+    >
+      {SITE.supportedLangs.map((l) => (
+        <option key={l} value={l}>
+          {l.toUpperCase()}
+        </option>
+      ))}
+    </select>
   );
 }

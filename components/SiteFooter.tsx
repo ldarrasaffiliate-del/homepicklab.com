@@ -12,12 +12,8 @@ export function SiteFooter() {
   return (
     <footer className="footer">
       <div className="footer-inner">
-        <div>© {new Date().getFullYear()} — {SITE.brandName}</div>
-        <nav aria-label={t.footerLinksLabel} className="nav">
-          <Link href={blogIndexPath(lang)}>{t.blog}</Link>
-          <Link href={legalNoticePath(lang)}>{t.legal}</Link>
-          <Link href={privacyPath(lang)}>{t.privacy}</Link>
-        </nav>
+        © {new Date().getFullYear()} — {SITE.brandName} · <Link href={blogIndexPath(lang)}>{t.blog}</Link> ·{' '}
+        <Link href={legalNoticePath(lang)}>{t.legal}</Link> · <Link href={privacyPath(lang)}>{t.privacy}</Link>
       </div>
     </footer>
   );

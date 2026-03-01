@@ -14,25 +14,16 @@ export function SiteHeader() {
     <header className="header">
       <div className="header-inner">
         <Link aria-label={`${SITE.brandName} — ${t.home}`} className="brand" href={homePath(lang)}>
-          <img
-            alt={SITE.brandName}
-            decoding="async"
-            fetchPriority="high"
-            height={32}
-            src="/images/homepickslab-logo.png"
-            width={156}
-          />
+          <img alt={SITE.brandName} decoding="async" fetchPriority="high" height={32} src="/images/homepickslab-logo.png" width={156} />
         </Link>
 
-        <div className="header-right">
-          <nav aria-label={t.primaryNavLabel} className="nav">
-            <Link href={robotVacuumPath(lang)}>{t.robotVacuums}</Link>
-            <Link href={coffeeMachinesPath(lang)}>{t.coffeeMachines}</Link>
-            <Link href={airfryersPath(lang)}>{t.airfryers}</Link>
-            <Link href={blogIndexPath(lang)}>{t.blog}</Link>
-          </nav>
+        <nav aria-label={t.primaryNavLabel} className="nav">
+          <Link href={robotVacuumPath(lang)}>{t.robotVacuums}</Link>
+          <Link href={coffeeMachinesPath(lang)}>{t.coffeeMachines}</Link>
+          <Link href={airfryersPath(lang)}>{t.airfryers}</Link>
+          <Link href={blogIndexPath(lang)}>{t.blog}</Link>
           <LanguageSelect />
-        </div>
+        </nav>
       </div>
     </header>
   );
