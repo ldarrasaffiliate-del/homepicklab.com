@@ -1,4 +1,421 @@
 (function () {
+  var GA4_ID = 'G-W6JW3C08M3';
+  var CONSENT_KEY = 'hpl_consent_v1';
+
+  function getLangFromPathname(pathname) {
+    var p = String(pathname || '/');
+    if (p === '/fr' || p.indexOf('/fr/') === 0) return 'fr';
+    if (p === '/es' || p.indexOf('/es/') === 0) return 'es';
+    if (p === '/de' || p.indexOf('/de/') === 0) return 'de';
+    return 'en';
+  }
+
+  function getCopy() {
+    var lang = getLangFromPathname(window.location.pathname);
+    var COPY = {
+      en: {
+        manageCookies: 'Manage cookies',
+        cookieAria: 'Cookie consent',
+        cookieTitle: 'Cookies',
+        cookieTextBefore: 'Necessary cookies are always on. You can also allow',
+        cookieTextAnalytics: 'Analytics (GA4)',
+        cookieTextAnd: 'and',
+        cookieTextExternal: 'External media (YouTube).',
+        acceptAll: 'Accept all',
+        rejectAll: 'Reject',
+        customize: 'Customize',
+        cookieSettingsTitle: 'Cookie settings',
+        cookieSettingsSubtitle: 'Choose what you allow. Necessary is always on.',
+        necessary: 'Necessary',
+        necessaryDesc: 'Core functionality, security, and consent storage.',
+        analytics: 'Analytics (GA4)',
+        analyticsDesc: 'Loaded only after consent. Helps us improve the site.',
+        externalMedia: 'External media',
+        externalMediaDesc: 'Enables YouTube embeds (youtube-nocookie.com).',
+        save: 'Save',
+        close: 'Close',
+        videoPlaceholderTitle: 'Click to load video',
+        videoPlaceholderBody: 'External media (YouTube) is blocked until you allow it.',
+        videoPlaceholderCta: 'Load video',
+      },
+      fr: {
+        manageCookies: 'Gérer les cookies',
+        cookieAria: 'Consentement cookies',
+        cookieTitle: 'Cookies',
+        cookieTextBefore: 'Les cookies nécessaires sont toujours actifs. Vous pouvez aussi autoriser',
+        cookieTextAnalytics: 'Analytics (GA4)',
+        cookieTextAnd: 'et',
+        cookieTextExternal: 'Médias externes (YouTube).',
+        acceptAll: 'Tout accepter',
+        rejectAll: 'Tout refuser',
+        customize: 'Personnaliser',
+        cookieSettingsTitle: 'Paramètres cookies',
+        cookieSettingsSubtitle: 'Choisissez ce que vous autorisez. Nécessaires : toujours actifs.',
+        necessary: 'Nécessaires',
+        necessaryDesc: 'Fonctionnement, sécurité et stockage du consentement.',
+        analytics: 'Analytics (GA4)',
+        analyticsDesc: 'Chargé uniquement après consentement. Aide à améliorer le site.',
+        externalMedia: 'Médias externes',
+        externalMediaDesc: 'Active les vidéos YouTube (youtube-nocookie.com).',
+        save: 'Enregistrer',
+        close: 'Fermer',
+        videoPlaceholderTitle: 'Cliquer pour charger la vidéo',
+        videoPlaceholderBody: 'Les médias externes (YouTube) sont bloqués tant que vous ne les autorisez pas.',
+        videoPlaceholderCta: 'Charger la vidéo',
+      },
+      es: {
+        manageCookies: 'Gestionar cookies',
+        cookieAria: 'Consentimiento de cookies',
+        cookieTitle: 'Cookies',
+        cookieTextBefore: 'Las cookies necesarias siempre están activas. También puedes permitir',
+        cookieTextAnalytics: 'Analítica (GA4)',
+        cookieTextAnd: 'y',
+        cookieTextExternal: 'Medios externos (YouTube).',
+        acceptAll: 'Aceptar todo',
+        rejectAll: 'Rechazar',
+        customize: 'Personalizar',
+        cookieSettingsTitle: 'Ajustes de cookies',
+        cookieSettingsSubtitle: 'Elige lo que permites. Las necesarias siempre están activas.',
+        necessary: 'Necesarias',
+        necessaryDesc: 'Funcionalidad básica, seguridad y almacenamiento del consentimiento.',
+        analytics: 'Analítica (GA4)',
+        analyticsDesc: 'Se carga solo tras el consentimiento. Ayuda a mejorar el sitio.',
+        externalMedia: 'Medios externos',
+        externalMediaDesc: 'Activa vídeos de YouTube (youtube-nocookie.com).',
+        save: 'Guardar',
+        close: 'Cerrar',
+        videoPlaceholderTitle: 'Haz clic para cargar el vídeo',
+        videoPlaceholderBody: 'Los medios externos (YouTube) están bloqueados hasta que los permitas.',
+        videoPlaceholderCta: 'Cargar vídeo',
+      },
+      de: {
+        manageCookies: 'Cookies verwalten',
+        cookieAria: 'Cookie-Einwilligung',
+        cookieTitle: 'Cookies',
+        cookieTextBefore: 'Notwendige Cookies sind immer aktiv. Du kannst zusätzlich',
+        cookieTextAnalytics: 'Analytics (GA4)',
+        cookieTextAnd: 'und',
+        cookieTextExternal: 'Externe Medien (YouTube) erlauben.',
+        acceptAll: 'Alle akzeptieren',
+        rejectAll: 'Ablehnen',
+        customize: 'Anpassen',
+        cookieSettingsTitle: 'Cookie-Einstellungen',
+        cookieSettingsSubtitle: 'Wähle aus. Notwendige Cookies sind immer aktiv.',
+        necessary: 'Notwendig',
+        necessaryDesc: 'Grundfunktionen, Sicherheit und Speicherung der Einwilligung.',
+        analytics: 'Analytics (GA4)',
+        analyticsDesc: 'Wird erst nach Einwilligung geladen. Hilft uns, die Seite zu verbessern.',
+        externalMedia: 'Externe Medien',
+        externalMediaDesc: 'Aktiviert YouTube-Einbettungen (youtube-nocookie.com).',
+        save: 'Speichern',
+        close: 'Schließen',
+        videoPlaceholderTitle: 'Klicken, um das Video zu laden',
+        videoPlaceholderBody: 'Externe Medien (YouTube) sind blockiert, bis du sie erlaubst.',
+        videoPlaceholderCta: 'Video laden',
+      },
+    };
+
+    return COPY[lang] || COPY.en;
+  }
+
+  function readConsent() {
+    try {
+      var raw = localStorage.getItem(CONSENT_KEY);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      return { analytics: !!parsed.analytics, externalMedia: !!parsed.externalMedia };
+    } catch {
+      return null;
+    }
+  }
+
+  function writeConsent(next) {
+    try {
+      localStorage.setItem(
+        CONSENT_KEY,
+        JSON.stringify({ analytics: !!next.analytics, externalMedia: !!next.externalMedia, ts: Date.now() })
+      );
+    } catch {
+      // ignore
+    }
+  }
+
+  function ensureGa4Loaded() {
+    if (window.__hpl_ga4_loaded) return;
+    window.__hpl_ga4_loaded = true;
+
+    var ext = document.createElement('script');
+    ext.async = true;
+    ext.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA4_ID);
+    document.head.appendChild(ext);
+
+    var inline = document.createElement('script');
+    inline.text =
+      "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','" +
+      GA4_ID +
+      "',{anonymize_ip:true});";
+    document.head.appendChild(inline);
+  }
+
+  function ensureCookieUi(copy) {
+    var banner = document.getElementById('cookie-banner');
+    var modal = document.getElementById('cookie-modal');
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'cookie-banner';
+      banner.className = 'cookie-banner';
+      banner.setAttribute('role', 'dialog');
+      banner.setAttribute('aria-label', copy.cookieAria);
+      banner.style.display = 'none';
+      banner.innerHTML =
+        '<div class="cookie-inner">' +
+        '<div class="cookie-text">' +
+        '<strong data-cookie-title></strong>' +
+        '<div class="muted" data-cookie-text></div>' +
+        '</div>' +
+        '<div class="cookie-actions">' +
+        '<button type="button" class="btn-secondary" data-cookie-action="reject"></button>' +
+        '<button type="button" class="btn-secondary" data-cookie-action="customize"></button>' +
+        '<button type="button" data-cookie-action="accept"></button>' +
+        '</div>' +
+        '</div>';
+      document.body.appendChild(banner);
+    }
+
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'cookie-modal';
+      modal.className = 'cookie-modal';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-label', copy.cookieSettingsTitle);
+      modal.innerHTML =
+        '<div class="cookie-modal-inner">' +
+        '<div class="cookie-modal-head">' +
+        '<strong data-cookie-settings-title></strong>' +
+        '<button type="button" class="btn-secondary" data-cookie-close></button>' +
+        '</div>' +
+        '<div class="muted" data-cookie-settings-subtitle></div>' +
+        '<div class="cookie-rows">' +
+        '<div class="cookie-row">' +
+        '<label><input type="checkbox" checked disabled /> <span data-cookie-necessary></span></label>' +
+        '<div class="muted" data-cookie-necessary-desc></div>' +
+        '</div>' +
+        '<div class="cookie-row">' +
+        '<label><input type="checkbox" data-cookie-analytics-input /> <span data-cookie-analytics-label></span></label>' +
+        '<div class="muted" data-cookie-analytics-desc></div>' +
+        '</div>' +
+        '<div class="cookie-row">' +
+        '<label><input type="checkbox" data-cookie-external-input /> <span data-cookie-external-label></span></label>' +
+        '<div class="muted" data-cookie-external-desc></div>' +
+        '</div>' +
+        '</div>' +
+        '<div class="cookie-actions" style="margin-top:12px">' +
+        '<button type="button" class="btn-secondary" data-cookie-close></button>' +
+        '<button type="button" data-cookie-save></button>' +
+        '</div>' +
+        '</div>';
+      document.body.appendChild(modal);
+
+      modal.addEventListener('click', function (e) {
+        if (e && e.target === modal) closeCookieSettings();
+      });
+    }
+
+    // Update copy every run (in case SPA navigation changes language).
+    banner.setAttribute('aria-label', copy.cookieAria);
+    banner.querySelector('[data-cookie-title]').textContent = copy.cookieTitle;
+    banner.querySelector('[data-cookie-text]').textContent =
+      copy.cookieTextBefore + ' ' + copy.cookieTextAnalytics + ' ' + copy.cookieTextAnd + ' ' + copy.cookieTextExternal;
+    banner.querySelector('[data-cookie-action="reject"]').textContent = copy.rejectAll;
+    banner.querySelector('[data-cookie-action="customize"]').textContent = copy.customize;
+    banner.querySelector('[data-cookie-action="accept"]').textContent = copy.acceptAll;
+
+    modal.setAttribute('aria-label', copy.cookieSettingsTitle);
+    modal.querySelector('[data-cookie-settings-title]').textContent = copy.cookieSettingsTitle;
+    var closeBtns = modal.querySelectorAll('[data-cookie-close]');
+    for (var i = 0; i < closeBtns.length; i++) closeBtns[i].textContent = copy.close;
+    modal.querySelector('[data-cookie-save]').textContent = copy.save;
+    modal.querySelector('[data-cookie-settings-subtitle]').textContent = copy.cookieSettingsSubtitle;
+    modal.querySelector('[data-cookie-necessary]').textContent = copy.necessary;
+    modal.querySelector('[data-cookie-necessary-desc]').textContent = copy.necessaryDesc;
+    modal.querySelector('[data-cookie-analytics-label]').textContent = copy.analytics;
+    modal.querySelector('[data-cookie-analytics-desc]').textContent = copy.analyticsDesc;
+    modal.querySelector('[data-cookie-external-label]').textContent = copy.externalMedia;
+    modal.querySelector('[data-cookie-external-desc]').textContent = copy.externalMediaDesc;
+
+    // One-time event bindings
+    if (banner.getAttribute('data-cookie-bound') !== '1') {
+      banner.setAttribute('data-cookie-bound', '1');
+      banner.addEventListener('click', function (e) {
+        var t = e && e.target ? e.target : null;
+        var action = t && t.getAttribute ? t.getAttribute('data-cookie-action') : '';
+        if (!action) return;
+        if (action === 'accept') {
+          var c1 = { analytics: true, externalMedia: true };
+          writeConsent(c1);
+          hideCookieBanner();
+          applyConsent(c1);
+          return;
+        }
+        if (action === 'reject') {
+          var c2 = { analytics: false, externalMedia: false };
+          writeConsent(c2);
+          hideCookieBanner();
+          applyConsent(c2);
+          return;
+        }
+        if (action === 'customize') {
+          openCookieSettings();
+        }
+      });
+    }
+
+    if (modal.getAttribute('data-cookie-bound') !== '1') {
+      modal.setAttribute('data-cookie-bound', '1');
+      modal.addEventListener('click', function (e) {
+        var t = e && e.target ? e.target : null;
+        if (!t || !t.getAttribute) return;
+        if (t.hasAttribute('data-cookie-close')) closeCookieSettings();
+        if (t.hasAttribute('data-cookie-save')) saveCookieSettings();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e && e.key === 'Escape') closeCookieSettings();
+      });
+    }
+  }
+
+  function showCookieBanner() {
+    var banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+    banner.style.display = '';
+  }
+
+  function hideCookieBanner() {
+    var banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+    banner.style.display = 'none';
+  }
+
+  function openCookieSettings() {
+    var modal = document.getElementById('cookie-modal');
+    if (!modal) return;
+
+    var consent = readConsent() || { analytics: false, externalMedia: false };
+    var a = modal.querySelector('[data-cookie-analytics-input]');
+    var x = modal.querySelector('[data-cookie-external-input]');
+    if (a) a.checked = !!consent.analytics;
+    if (x) x.checked = !!consent.externalMedia;
+
+    modal.setAttribute('data-open', '1');
+  }
+
+  function closeCookieSettings() {
+    var modal = document.getElementById('cookie-modal');
+    if (!modal) return;
+    modal.removeAttribute('data-open');
+  }
+
+  function saveCookieSettings() {
+    var modal = document.getElementById('cookie-modal');
+    if (!modal) return;
+
+    var a = modal.querySelector('[data-cookie-analytics-input]');
+    var x = modal.querySelector('[data-cookie-external-input]');
+    var next = { analytics: !!(a && a.checked), externalMedia: !!(x && x.checked) };
+    writeConsent(next);
+    hideCookieBanner();
+    closeCookieSettings();
+    applyConsent(next);
+  }
+
+  function buildYouTubeUrl(id) {
+    return (
+      'https://www.youtube-nocookie.com/embed/' +
+      encodeURIComponent(String(id || '')) +
+      '?rel=0&modestbranding=1&playsinline=1'
+    );
+  }
+
+  function renderYouTubeIframe(el, id, title) {
+    el.textContent = '';
+    el.classList.add('card');
+
+    var iframe = document.createElement('iframe');
+    iframe.className = 'video-embed';
+    iframe.loading = 'lazy';
+    iframe.referrerPolicy = 'no-referrer-when-downgrade';
+    iframe.allowFullscreen = true;
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.src = buildYouTubeUrl(id);
+    iframe.title = title || 'YouTube video';
+    el.appendChild(iframe);
+  }
+
+  function renderYouTubePlaceholder(el, copy) {
+    el.textContent = '';
+    el.classList.add('card');
+
+    var wrap = document.createElement('div');
+    wrap.className = 'video-placeholder';
+
+    var strong = document.createElement('strong');
+    strong.textContent = copy.videoPlaceholderTitle;
+    wrap.appendChild(strong);
+
+    var body = document.createElement('div');
+    body.className = 'muted';
+    body.textContent = copy.videoPlaceholderBody;
+    wrap.appendChild(body);
+
+    var actions = document.createElement('div');
+    actions.className = 'video-actions';
+
+    var manage = document.createElement('button');
+    manage.type = 'button';
+    manage.className = 'btn-secondary';
+    manage.textContent = copy.manageCookies;
+    manage.addEventListener('click', openCookieSettings);
+
+    var load = document.createElement('button');
+    load.type = 'button';
+    load.textContent = copy.videoPlaceholderCta;
+    load.addEventListener('click', function () {
+      var next = readConsent() || { analytics: false, externalMedia: false };
+      next.externalMedia = true;
+      writeConsent(next);
+      hideCookieBanner();
+      applyConsent(next);
+    });
+
+    actions.appendChild(manage);
+    actions.appendChild(load);
+    wrap.appendChild(actions);
+    el.appendChild(wrap);
+  }
+
+  function enhanceYouTubeEmbeds(consent, copy) {
+    var nodes = document.querySelectorAll('[data-youtube-id]');
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      var id = el.getAttribute('data-youtube-id') || '';
+      if (!id) continue;
+      var title = el.getAttribute('data-youtube-title') || '';
+      var mode = consent && consent.externalMedia ? 'iframe' : 'placeholder';
+      if (el.getAttribute('data-video-mode') === mode) continue;
+      el.setAttribute('data-video-mode', mode);
+
+      if (mode === 'iframe') renderYouTubeIframe(el, id, title);
+      else renderYouTubePlaceholder(el, copy);
+    }
+  }
+
+  function applyConsent(consent) {
+    var copy = getCopy();
+    if (consent && consent.analytics) ensureGa4Loaded();
+    enhanceYouTubeEmbeds(consent || { analytics: false, externalMedia: false }, copy);
+  }
+
   function normalizePrefix(prefix) {
     var p = String(prefix || '').trim();
     if (!p) return '';
@@ -206,14 +623,64 @@
     setCurrent(initialIndex, { silentScroll: true });
   }
 
-  function run() {
+  function enhanceGalleries() {
     var galleries = document.querySelectorAll('[data-carousel-prefix][data-carousel-count]');
     for (var i = 0; i < galleries.length; i++) enhanceGallery(galleries[i]);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', run);
-  } else {
-    run();
+  function bindManageCookiesLink() {
+    var links = document.querySelectorAll('[data-manage-cookies]');
+    for (var i = 0; i < links.length; i++) {
+      var link = links[i];
+      if (link.getAttribute('data-cookie-bound') === '1') continue;
+      link.setAttribute('data-cookie-bound', '1');
+      link.addEventListener('click', function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        openCookieSettings();
+      });
+    }
   }
+
+  function run() {
+    var copy = getCopy();
+    ensureCookieUi(copy);
+    bindManageCookiesLink();
+
+    var consent = readConsent();
+    if (!consent) {
+      showCookieBanner();
+      consent = { analytics: false, externalMedia: false };
+    } else {
+      hideCookieBanner();
+    }
+
+    applyConsent(consent);
+    enhanceGalleries();
+  }
+
+  function installSpaNavigationHook() {
+    if (window.__hpl_nav_hooked) return;
+    window.__hpl_nav_hooked = true;
+
+    function scheduleRun() {
+      window.setTimeout(run, 0);
+    }
+
+    var _push = history.pushState;
+    history.pushState = function () {
+      _push.apply(this, arguments);
+      scheduleRun();
+    };
+    var _replace = history.replaceState;
+    history.replaceState = function () {
+      _replace.apply(this, arguments);
+      scheduleRun();
+    };
+    window.addEventListener('popstate', scheduleRun);
+  }
+
+  installSpaNavigationHook();
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+  else run();
 })();

@@ -13,7 +13,10 @@ export function SiteFooter() {
     <footer className="footer">
       <div className="footer-inner">
         © {new Date().getFullYear()} — {SITE.brandName} · <Link href={blogIndexPath(lang)}>{t.blog}</Link> ·{' '}
-        <Link href={legalNoticePath(lang)}>{t.legal}</Link> · <Link href={privacyPath(lang)}>{t.privacy}</Link>
+        <Link href={legalNoticePath(lang)}>{t.legal}</Link> · <Link href={privacyPath(lang)}>{t.privacy}</Link> ·{' '}
+        <a href="#cookie-settings" data-manage-cookies>
+          {t.manageCookies}
+        </a>
       </div>
     </footer>
   );
