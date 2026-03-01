@@ -103,7 +103,7 @@
 
     var mainImg = document.createElement('img');
     mainImg.decoding = 'async';
-    mainImg.loading = 'lazy';
+    mainImg.loading = 'eager';
     mainImg.alt = formatAlt(altTemplate, initialIndex);
     mainImg.src = buildImageUrl(prefix, initialIndex);
     mainBtn.appendChild(mainImg);
@@ -217,4 +217,3 @@
     run();
   }
 })();
-
