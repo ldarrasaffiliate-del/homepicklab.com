@@ -23,6 +23,10 @@ export type UiCopy = {
   blog: string;
   legal: string;
   privacy: string;
+  about: string;
+  methodology: string;
+  sources: string;
+  contact: string;
   language: string;
   manageCookies: string;
   cookieAria: string;
@@ -68,6 +72,10 @@ export const UI_TRANSLATIONS: Record<Lang, UiCopy> = {
     blog: 'Blog',
     legal: 'Legal notice',
     privacy: 'Privacy policy',
+    about: 'About',
+    methodology: 'How we test',
+    sources: 'Sources',
+    contact: 'Contact',
     language: 'Language',
     manageCookies: 'Manage cookies',
     cookieAria: 'Cookie consent',
@@ -112,6 +120,10 @@ export const UI_TRANSLATIONS: Record<Lang, UiCopy> = {
     blog: 'Blog',
     legal: 'Mentions légales',
     privacy: 'Politique de confidentialité',
+    about: 'À propos',
+    methodology: 'Méthodologie',
+    sources: 'Sources',
+    contact: 'Contact',
     language: 'Langue',
     manageCookies: 'Gérer les cookies',
     cookieAria: 'Consentement cookies',
@@ -157,6 +169,10 @@ export const UI_TRANSLATIONS: Record<Lang, UiCopy> = {
     blog: 'Blog',
     legal: 'Aviso legal',
     privacy: 'Política de privacidad',
+    about: 'Acerca de',
+    methodology: 'Metodología',
+    sources: 'Fuentes',
+    contact: 'Contacto',
     language: 'Idioma',
     manageCookies: 'Gestionar cookies',
     cookieAria: 'Consentimiento de cookies',
@@ -202,6 +218,10 @@ export const UI_TRANSLATIONS: Record<Lang, UiCopy> = {
     blog: 'Blog',
     legal: 'Impressum',
     privacy: 'Datenschutzerklärung',
+    about: 'Über uns',
+    methodology: 'Methodik',
+    sources: 'Quellen',
+    contact: 'Kontakt',
     language: 'Sprache',
     manageCookies: 'Cookies verwalten',
     cookieAria: 'Cookie-Einwilligung',
@@ -346,6 +366,26 @@ export function legalNoticePath(lang: Lang): string {
 
 export function privacyPath(lang: Lang): string {
   return ROUTE_BY_KEY.privacy_policy[lang];
+}
+
+export function aboutPath(lang: Lang): string {
+  const prefix = prefixPath(lang);
+  return `${prefix}/about/`.replace(/\/{2,}/g, '/');
+}
+
+export function methodologyPath(lang: Lang): string {
+  const prefix = prefixPath(lang);
+  return `${prefix}/methodology/`.replace(/\/{2,}/g, '/');
+}
+
+export function sourcesPath(lang: Lang): string {
+  const prefix = prefixPath(lang);
+  return `${prefix}/sources/`.replace(/\/{2,}/g, '/');
+}
+
+export function contactPath(lang: Lang): string {
+  const prefix = prefixPath(lang);
+  return `${prefix}/contact/`.replace(/\/{2,}/g, '/');
 }
 
 export function robotVacuumPath(lang: Lang): string {

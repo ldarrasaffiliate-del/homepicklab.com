@@ -4,6 +4,7 @@ import './globals.css';
 import { SITE } from '@/lib/site';
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
+import { LangHtmlUpdater } from '@/components/LangHtmlUpdater';
 
 export const viewport: Viewport = {
   themeColor: '#ffffff',
@@ -48,8 +49,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
+        <LangHtmlUpdater />
         <SiteHeader />
         <main className="container">{children}</main>
         <SiteFooter />
