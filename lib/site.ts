@@ -100,7 +100,7 @@ export const UI_TRANSLATIONS: Record<Lang, UiCopy> = {
     videoPlaceholderTitle: 'Click to load video',
     videoPlaceholderBody: 'External media (YouTube) is blocked until you allow it.',
     videoPlaceholderCta: 'Load video',
-    amazonAssociateLocal: '',
+    amazonAssociateLocal: 'As an Amazon Associate, HomePicksLab.com earns from qualifying purchases.',
     trademarkDisclosure:
       'Trademarks belong to their respective owners. This site provides editorial content and may use sponsored affiliate links.',
     footerMeta: `© 2026 ${SITE.ownerName} • Built by ${SITE.builderName} • Hosted on ${SITE.hostName}`,

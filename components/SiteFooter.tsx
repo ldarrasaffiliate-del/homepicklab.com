@@ -30,6 +30,7 @@ export function SiteFooter() {
         <a href="#cookie-settings" data-manage-cookies>
           {t.manageCookies}
         </a>
+        {t.amazonAssociateLocal ? ` · ${t.amazonAssociateLocal}` : null}
       </div>
     </footer>
   );

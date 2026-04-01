@@ -1,34 +1,93 @@
 import type { Post } from '@/lib/types';
 import {
   UI_TRANSLATIONS,
+  aboutPath,
   airfryersPath,
   blogIndexPath,
   coffeeMachinesPath,
+  contactPath,
   homePath,
   legalNoticePath,
+  methodologyPath,
   normalizeLang,
   privacyPath,
   robotVacuumPath,
+  sourcesPath,
   SITE,
 } from '@/lib/site';
 
 const BASE_URL = SITE.baseUrl;
+const ORG_ID = `${BASE_URL}/#organization`;
+const WEBSITE_ID = `${BASE_URL}/#website`;
 
-export function buildArticleJsonLd(post: Post) {
-  const url = new URL(post.canonical ?? `/${post.slug}`, BASE_URL).toString();
-  const published = post.date ?? post.updatedAt ?? new Date().toISOString();
-  const modified = post.updatedAt ?? published;
+export function buildOrganizationJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': ORG_ID,
+    name: SITE.brandName,
+    url: BASE_URL,
+    email: SITE.contactEmail,
+    logo: {
+      '@type': 'ImageObject',
+      url: new URL('/images/homepickslab-logo.png', BASE_URL).toString(),
+    },
+  };
+}
+
+export function buildWebSiteJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': WEBSITE_ID,
+    name: SITE.brandName,
+    url: BASE_URL,
+    publisher: { '@id': ORG_ID },
+  };
+}
+
+function getPublishedAndModified(post: Post): { published?: string; modified?: string } {
+  const published = post.date ?? post.updatedAt ?? undefined;
+  const modified = post.updatedAt ?? post.date ?? undefined;
+  return { published, modified };
+}
+
+export function buildPrimaryEntityJsonLd(post: Post) {
+  const url = new URL(canonicalPathFromPost(post), BASE_URL).toString();
+  const lang = normalizeLang(post.lang);
+  const title = stripBrandSuffix(post.title) || post.title;
+  const { published, modified } = getPublishedAndModified(post);
+
+  // Blog content: BlogPosting is the most accurate schema for articles.
+  if (post.type === 'article') {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: title,
+      description: post.description,
+      mainEntityOfPage: url,
+      datePublished: published,
+      dateModified: modified ?? published,
+      inLanguage: lang,
+      author: [{ '@id': ORG_ID }],
+      publisher: { '@id': ORG_ID },
+      isPartOf: { '@id': WEBSITE_ID },
+    };
+  }
+
+  const pageType = post.type === 'blogIndex' ? 'CollectionPage' : 'WebPage';
 
   return {
     '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: post.title,
+    '@type': pageType,
+    name: title,
     description: post.description,
-    mainEntityOfPage: url,
+    url,
     datePublished: published,
-    dateModified: modified,
-    author: [{ '@type': 'Organization', name: SITE.brandName }],
-    publisher: { '@type': 'Organization', name: SITE.brandName },
+    dateModified: modified ?? published,
+    inLanguage: lang,
+    publisher: { '@id': ORG_ID },
+    isPartOf: { '@id': WEBSITE_ID },
   };
 }
 
@@ -50,6 +109,13 @@ function canonicalPathFromPost(post: Post): string {
   return ensureTrailingSlash(withLeading);
 }
 
+function stripBrandSuffix(title: string): string {
+  const t = String(title ?? '').trim();
+  if (!t) return '';
+  const suffix = ` | ${SITE.brandName}`;
+  return t.endsWith(suffix) ? t.slice(0, -suffix.length).trim() : t;
+}
+
 type Crumb = { name: string; path: string };
 
 function getKeyedCrumbs(post: Post, lang: ReturnType<typeof normalizeLang>): Crumb[] | null {
@@ -62,6 +128,10 @@ function getKeyedCrumbs(post: Post, lang: ReturnType<typeof normalizeLang>): Cru
   if (key === 'robot_vacuum_mop') return [home, { name: ui.robotVacuums, path: robotVacuumPath(lang) }];
   if (key === 'automatic_coffee_machines') return [home, { name: ui.coffeeMachines, path: coffeeMachinesPath(lang) }];
   if (key === 'airfryers') return [home, { name: ui.airfryers, path: airfryersPath(lang) }];
+  if (key === 'about') return [home, { name: ui.about, path: aboutPath(lang) }];
+  if (key === 'methodology') return [home, { name: ui.methodology, path: methodologyPath(lang) }];
+  if (key === 'sources') return [home, { name: ui.sources, path: sourcesPath(lang) }];
+  if (key === 'contact') return [home, { name: ui.contact, path: contactPath(lang) }];
   if (key === 'legal_notice') return [home, { name: ui.legal, path: legalNoticePath(lang) }];
   if (key === 'privacy_policy') return [home, { name: ui.privacy, path: privacyPath(lang) }];
 
@@ -91,6 +161,27 @@ export function buildBreadcrumbJsonLd(post: Post) {
   const lang = normalizeLang(post.lang);
   const url = new URL(canonicalPathFromPost(post), BASE_URL).toString();
 
+  // Blog articles should always live under the Blog hub in breadcrumbs.
+  if (post.type === 'article') {
+    const ui = UI_TRANSLATIONS[lang];
+    const crumbs: Crumb[] = [
+      { name: ui.home, path: homePath(lang) },
+      { name: ui.blog, path: blogIndexPath(lang) },
+      { name: stripBrandSuffix(post.title) || ui.blog, path: canonicalPathFromPost(post) },
+    ];
+
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: crumbs.map((c, idx) => ({
+        '@type': 'ListItem',
+        position: idx + 1,
+        name: c.name,
+        item: idx === crumbs.length - 1 ? url : new URL(c.path, BASE_URL).toString(),
+      })),
+    };
+  }
+
   const keyed = getKeyedCrumbs(post, lang);
   if (keyed) {
     return {
@@ -111,7 +202,7 @@ export function buildBreadcrumbJsonLd(post: Post) {
   const parent = inferParentCrumb(post, lang);
   if (parent) crumbs.push(parent);
 
-  crumbs.push({ name: post.title, path: canonicalPathFromPost(post) });
+  crumbs.push({ name: stripBrandSuffix(post.title) || post.title, path: canonicalPathFromPost(post) });
 
   return {
     '@context': 'https://schema.org',

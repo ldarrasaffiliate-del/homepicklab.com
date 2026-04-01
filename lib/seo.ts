@@ -24,6 +24,11 @@ export function buildAlternates(meta: DocMeta, all: DocMeta[]): Metadata['altern
     languages[m.lang] = m.canonical ?? m.routePath;
   }
 
+  // Helpful for Google when the "default" audience is EN / global.
+  if (languages.en) {
+    languages['x-default'] = languages.en;
+  }
+
   return {
     canonical,
     languages: Object.keys(languages).length ? languages : undefined,

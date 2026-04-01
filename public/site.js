@@ -157,6 +157,112 @@
     document.head.appendChild(inline);
   }
 
+  function safeText(input, maxLen) {
+    var s = String(input || '').replace(/\s+/g, ' ').trim();
+    if (!s) return '';
+    var n = Number(maxLen || 0);
+    if (!Number.isFinite(n) || n <= 0) n = 120;
+    return s.length > n ? s.slice(0, n) : s;
+  }
+
+  function getVerticalFromPathname(pathname) {
+    var p = String(pathname || '/');
+
+    // Robot vacuums & mops
+    if (
+      p.indexOf('/robot-vacuum-mop-comparison') !== -1 ||
+      p.indexOf('/fr/comparatif-aspirateurs-robots') !== -1 ||
+      p.indexOf('/es/comparativa-robots-aspirador') !== -1 ||
+      p.indexOf('/de/saugroboter-vergleich') !== -1
+    ) {
+      return 'robot_vacuum_mop';
+    }
+
+    // Coffee machines
+    if (
+      p.indexOf('/automatic-coffee-machines') !== -1 ||
+      p.indexOf('/fr/machines-a-cafe-automatiques') !== -1 ||
+      p.indexOf('/es/cafeteras-automaticas') !== -1 ||
+      p.indexOf('/de/kaffeevollautomaten') !== -1
+    ) {
+      return 'automatic_coffee_machines';
+    }
+
+    // Airfryers
+    if (
+      p.indexOf('/airfryers') !== -1 ||
+      p.indexOf('/es/freidoras-de-aire') !== -1 ||
+      p.indexOf('/de/heissluftfritteusen') !== -1
+    ) {
+      return 'airfryers';
+    }
+
+    if (p === '/blog' || p.indexOf('/blog/') === 0 || p.indexOf('/fr/blog/') === 0 || p.indexOf('/es/blog/') === 0 || p.indexOf('/de/blog/') === 0) {
+      return 'blog';
+    }
+
+    return 'other';
+  }
+
+  function isAffiliateLink(a) {
+    if (!a) return false;
+    var rel = String(a.getAttribute('rel') || '').toLowerCase();
+    if (rel.indexOf('sponsored') !== -1) return true;
+    if (a.getAttribute('data-affiliate-product')) return true;
+    return false;
+  }
+
+  function installAffiliateClickHook() {
+    if (window.__hpl_affiliate_hooked) return;
+    window.__hpl_affiliate_hooked = true;
+
+    document.addEventListener(
+      'click',
+      function (e) {
+        try {
+          var target = e && e.target ? e.target : null;
+          if (!target) return;
+
+          var a = target.closest ? target.closest('a') : null;
+          if (!a) return;
+          if (!isAffiliateLink(a)) return;
+
+          var consent = readConsent();
+          if (!consent || !consent.analytics) return;
+
+          ensureGa4Loaded();
+          if (typeof window.gtag !== 'function') return;
+
+          var href = a.getAttribute('href') || '';
+          if (!href) return;
+
+          var url = null;
+          try {
+            url = new URL(href, window.location.href);
+          } catch {
+            return;
+          }
+
+          var path = window.location && window.location.pathname ? window.location.pathname : '/';
+          var product = a.getAttribute('data-affiliate-product') || '';
+
+          window.gtag('event', 'affiliate_click', {
+            link_url: url.toString(),
+            link_domain: url.hostname || '',
+            link_text: safeText(a.textContent || '', 80),
+            affiliate_product: safeText(product, 40),
+            page_path: path,
+            page_lang: getLangFromPathname(path),
+            vertical: getVerticalFromPathname(path),
+          });
+        } catch {
+          // ignore
+        }
+      },
+      true
+    );
+  }
+
   function ensureCookieUi(copy) {
     var banner = document.getElementById('cookie-banner');
     var modal = document.getElementById('cookie-modal');
@@ -628,6 +734,72 @@
     for (var i = 0; i < galleries.length; i++) enhanceGallery(galleries[i]);
   }
 
+  function normalizeSearchText(input) {
+    return String(input || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function tokenizeQuery(q) {
+    var s = normalizeSearchText(q);
+    return s ? s.split(' ') : [];
+  }
+
+  function readBlogQueryFromUrl() {
+    try {
+      var params = new URLSearchParams(window.location.search || '');
+      return params.get('q') || '';
+    } catch {
+      return '';
+    }
+  }
+
+  function applyBlogSearch(tokens) {
+    var cards = document.querySelectorAll('[data-blog-card]');
+    if (!cards || !cards.length) return;
+
+    var want = Array.isArray(tokens) ? tokens.filter(Boolean) : [];
+    var any = false;
+
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      var hay = normalizeSearchText((card.getAttribute('data-title') || '') + ' ' + (card.getAttribute('data-tags') || ''));
+      var ok = true;
+      for (var t = 0; t < want.length; t++) {
+        if (hay.indexOf(want[t]) === -1) {
+          ok = false;
+          break;
+        }
+      }
+      card.style.display = ok ? '' : 'none';
+      if (ok) any = true;
+    }
+
+    var empty = document.querySelector('[data-blog-empty]');
+    if (empty) empty.hidden = any;
+  }
+
+  function enhanceBlogSearch() {
+    var input = document.querySelector('[data-blog-search]');
+    if (!input) return;
+
+    var cards = document.querySelectorAll('[data-blog-card]');
+    if (!cards || !cards.length) return;
+
+    if (input.getAttribute('data-blog-bound') !== '1') {
+      input.setAttribute('data-blog-bound', '1');
+      input.addEventListener('input', function () {
+        applyBlogSearch(tokenizeQuery(input.value || ''));
+      });
+    }
+
+    var q = readBlogQueryFromUrl();
+    if (q && String(input.value || '') !== String(q)) input.value = q;
+    applyBlogSearch(tokenizeQuery(input.value || ''));
+  }
+
   function bindManageCookiesLink() {
     var links = document.querySelectorAll('[data-manage-cookies]');
     for (var i = 0; i < links.length; i++) {
@@ -656,6 +828,7 @@
 
     applyConsent(consent);
     enhanceGalleries();
+    enhanceBlogSearch();
   }
 
   function installSpaNavigationHook() {
@@ -680,6 +853,7 @@
   }
 
   installSpaNavigationHook();
+  installAffiliateClickHook();
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
   else run();

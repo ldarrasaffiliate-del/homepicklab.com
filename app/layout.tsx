@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import './globals.css';
 import { SITE } from '@/lib/site';
+import { buildOrganizationJsonLd, buildWebSiteJsonLd } from '@/lib/schema';
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
 import { LangHtmlUpdater } from '@/components/LangHtmlUpdater';
@@ -48,10 +49,15 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const orgJsonLd = buildOrganizationJsonLd();
+  const webSiteJsonLd = buildWebSiteJsonLd();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
         <LangHtmlUpdater />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
         <SiteHeader />
         <main className="container">{children}</main>
         <SiteFooter />

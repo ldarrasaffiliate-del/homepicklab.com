@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllDocMetas, getDocMetaByRouteSegments, getPostByRouteSegments } from '@/lib/content';
-import { buildArticleJsonLd, buildBreadcrumbJsonLd } from '@/lib/schema';
+import { buildBreadcrumbJsonLd, buildPrimaryEntityJsonLd } from '@/lib/schema';
 import { buildAlternates, getOpenGraphImage, getOpenGraphType, parseRobots } from '@/lib/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -13,7 +13,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const canonical = meta.canonical ?? meta.routePath;
 
   return {
-    title: meta.title,
+    // Use absolute to avoid applying the root title template (prevents "| Brand | Brand").
+    title: { absolute: meta.title },
     description: meta.description,
     alternates: buildAlternates(meta, all),
     robots: parseRobots(meta.robots),
@@ -37,12 +38,12 @@ export default async function HomePage() {
   const post = await getPostByRouteSegments([]);
   if (!post) return notFound();
 
-  const articleJsonLd = buildArticleJsonLd(post);
+  const primaryJsonLd = buildPrimaryEntityJsonLd(post);
   const breadcrumbJsonLd = buildBreadcrumbJsonLd(post);
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(primaryJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       {post.faq?.length ? (
         <script

@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "bash scripts/postbuild.sh",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint app components lib --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
